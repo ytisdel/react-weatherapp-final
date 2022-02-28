@@ -1,10 +1,11 @@
 import "./App.css";
+import Weather from "./Weather";
 
 function App() {
   return (
     <div className="App">
       <div class="container">
-        <h1>React Weather App</h1>
+        <Weather />
         <footer>
           The app was made by Lona Tisdel and is{" "}
           <a
