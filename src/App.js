@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <div class="container">
-        <Weather />
+        <Weather defaultCity="New York" />
         <footer>
           The app was made by Lona Tisdel and is{" "}
           <a
