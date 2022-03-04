@@ -3,11 +3,11 @@ import axios from "axios";
 import "./Weather.css";
 
 export default function Weather(props) {
-  const [ready, setReady] = useState(false);
-  const [weatherData, setWeatherData] = useState({});
+  const [weatherData, setWeatherData] = useState({ ready: false });
   function handleResponse(response) {
     console.log(response.data);
     setWeatherData({
+      ready: true,
       temperature: response.data.main.temp,
       humidity: response.data.main.humidity,
       date: "Thursday 02:00",
@@ -16,10 +16,9 @@ export default function Weather(props) {
       wind: response.data.wind.speed,
       city: response.data.name,
     });
-    setReady(true);
   }
 
-  if (ready) {
+  if (weatherData.ready) {
     return (
       <div className="Weather">
         <form>
@@ -55,7 +54,9 @@ export default function Weather(props) {
                 className="float-left"
               />
               <span className="float-left">
-                <span className="temperature">{weatherData.temperature}</span>
+                <span className="temperature">
+                  {Math.round(weatherData.temperature)}
+                </span>
                 <span className="unit">°C</span>
               </span>
             </div>
@@ -64,7 +65,7 @@ export default function Weather(props) {
             <ul>
               <li>Precipitation: 15%</li>
               <li>Humidity: {weatherData.humidity}%</li>
-              <li>Wind: {weatherData.wind}km/h</li>
+              <li>Wind: {Math.round(weatherData.wind)} km/h</li>
             </ul>
           </div>
         </div>
@@ -72,7 +73,7 @@ export default function Weather(props) {
     );
   } else {
     let apiKey = "ff408b90d7682dde019327d939b65eb5";
-    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${props.defaultcity}&appid=${apiKey}&units=metric`;
+    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${props.defaultCity}&appid=${apiKey}&units=metric`;
 
     axios.get(apiUrl).then(handleResponse);
 
